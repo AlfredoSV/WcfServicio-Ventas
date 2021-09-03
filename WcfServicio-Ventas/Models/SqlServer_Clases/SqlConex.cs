@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 
 namespace WcfServicio_Ventas.Models.SqlServer_Clases
@@ -13,8 +14,8 @@ namespace WcfServicio_Ventas.Models.SqlServer_Clases
 
         public SqlConex()
         {
-            string cad = @"Server=ALFREDO\ALFREDO;database=Ventas;Trusted_Connection=True";
-            Conexion = new SqlConnection(cad);
+            ConnectionStringSettings cad = ConfigurationManager.ConnectionStrings["Micon"];
+            Conexion = new SqlConnection(cad.ConnectionString);
            
         }
 

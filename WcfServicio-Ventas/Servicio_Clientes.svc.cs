@@ -12,14 +12,14 @@ namespace WcfServicio_Ventas
         public ResultadoPeti Alta_Cliente(Cliente c)
         {
             MtaCliente mta = new MtaCliente();
-            return mta.NuevoCliente(c);
+            return mta.Editar_Alta_Cliente(c,1);
 
         }
 
         public ResultadoPeti Editar_Cliente(Cliente c)
         {
             MtaCliente mta = new MtaCliente();
-            return mta.EditarCliente(c);
+            return mta.Editar_Alta_Cliente(c,0);
         }
 
         public List<Cliente> Todo_Clientes(int? id)

@@ -2,13 +2,13 @@ CREATE DATABASE [Ventas];
 GO
 Use Ventas;
 
-DROP TABLE IF EXISTS Detalle_ticket;
-DROP TABLE IF EXISTS Ticket;
-DROP TABLE IF EXISTS Cliente;
-DROP TABLE IF EXISTS Inventario;
-DROP TABLE IF EXISTS Producto;
-DROP TABLE IF EXISTS Caja;
-DROP TABLE IF EXISTS Sucursal;
+DROP TABLE Detalle_ticket;
+DROP TABLE Ticket;
+DROP TABLE Cliente;
+DROP TABLE Inventario;
+DROP TABLE Producto;
+DROP TABLE Caja;
+DROP TABLE Sucursal;
 
 
 CREATE TABLE Cliente(

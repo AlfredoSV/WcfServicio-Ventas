@@ -86,66 +86,70 @@ namespace WcfServicio_Ventas.Models.MantenimientoCliente
         }
 
 
-        public ResultadoPeti NuevoCliente(Cliente c)
+
+        public ResultadoPeti Editar_Alta_Cliente(Cliente c, int op)
         {
             SqlConnection con = (new SqlConex()).Conexion;
             SqlCommand comando = null;
             bool alta = false;
+            ResultadoPeti obj = new ResultadoPeti();
 
-            using (con)
+            try
             {
-                con.Open();
+                using (con)
+                {
+                    con.Open();
+
+                    if (op == 1)
+                    {
+
+                        comando = new SqlCommand(DmlCad[2], con);
+                    }
+                    else
+                    {
+                        comando = new SqlCommand(DmlCad[3], con);
+                        comando.Parameters.AddWithValue("@id", c.Id_cliente);
+                    }
+
+
+
+                    comando.Parameters.AddWithValue("@nombre", c.Nombre);
+                    comando.Parameters.AddWithValue("@segundNombre", c.SegundoNombre);
+                    comando.Parameters.AddWithValue("@apellidoP", c.ApellidoP);
+                    comando.Parameters.AddWithValue("@apellidoM", c.ApellidoM);
+                    comando.Parameters.AddWithValue("@fechaN", c.Fecha_nacimiento);
+                    comando.Parameters.AddWithValue("@fechaA", c.Fechayhora_alta);
+
+                    alta = comando.ExecuteNonQuery() > 0;
+
+
+                }
+
+                if (alta)
+                {
+
+                    obj.Mensaje = "La operación se realizó correctamente";
+                    obj.Estatus = op == 1 ? "Se realizo el alta correctamente." : "Se actualizo correctamente." ;
+                }
+                else
+                {
+                    obj.Mensaje = "La operación no se realizó correctamente";
+                    obj.Estatus = op == 1 ? "No se realizo el alta." : "No se actualizo.";
+
+                }
+
+
                 
-                 comando = new SqlCommand(DmlCad[2], con);
-                 comando.Parameters.AddWithValue("@nombre", c.Nombre);
-                comando.Parameters.AddWithValue("@segundNombre", c.SegundoNombre);
-                comando.Parameters.AddWithValue("@apellidoP", c.ApellidoP);
-                comando.Parameters.AddWithValue("@apellidoM", c.ApellidoM);
-                comando.Parameters.AddWithValue("@fechaN", c.Fecha_nacimiento);
-                comando.Parameters.AddWithValue("@fechaA", c.Fechayhora_alta);
-
-                alta = comando.ExecuteNonQuery() > 0;
-                
-
             }
-
-            if (alta)
+            catch (Exception e)
             {
-                return new ResultadoPeti() { Mensaje ="El cliente se registro correctamente", Estatus = "Creado" };
-            }
-            return new ResultadoPeti() { Mensaje = "El cliente no se registro correctamente", Estatus = "No creado" };
-        }
 
-
-        public ResultadoPeti EditarCliente(Cliente c)
-        {
-            SqlConnection con = (new SqlConex()).Conexion;
-            SqlCommand comando = null;
-            bool alta = false;
-
-            using (con)
-            {
-                con.Open();
-
-                comando = new SqlCommand(DmlCad[3], con);
-                comando.Parameters.AddWithValue("@id", c.Id_cliente);
-                comando.Parameters.AddWithValue("@nombre", c.Nombre);
-                comando.Parameters.AddWithValue("@segundNombre", c.SegundoNombre);
-                comando.Parameters.AddWithValue("@apellidoP", c.ApellidoP);
-                comando.Parameters.AddWithValue("@apellidoM", c.ApellidoM);
-                comando.Parameters.AddWithValue("@fechaN", c.Fecha_nacimiento);
-                comando.Parameters.AddWithValue("@fechaA", c.Fechayhora_alta);
-
-                alta = comando.ExecuteNonQuery() > 0;
-
-
+                obj.Mensaje = e.Message;
+                obj.Estatus = "Error" ;
             }
 
-            if (alta)
-            {
-                return new ResultadoPeti() { Mensaje = "El cliente se actualizó correctamente", Estatus = "Actualizado" };
-            }
-            return new ResultadoPeti() { Mensaje = "El cliente no se actualizó correctamente", Estatus = "No actulizado" };
+            return obj;
+            
         }
 
 
