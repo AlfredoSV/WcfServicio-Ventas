@@ -20,5 +20,10 @@ namespace WcfServicio_Ventas
 
             return mta.Todo_ProdcutosTicket(id);
         }
+
+        public List<Ticket> Todo_Tickets(int? id)
+        {
+            return new MtaTicket().Todo_Ticket(id);
+        }
     }
 }

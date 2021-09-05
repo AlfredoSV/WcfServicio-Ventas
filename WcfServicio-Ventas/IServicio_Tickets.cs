@@ -14,5 +14,8 @@ namespace WcfServicio_Ventas
     {
         [OperationContract]
         List<ProductosTicket> Todo_ProductosTicket(int id);
+
+        [OperationContract]
+        List<Ticket> Todo_Tickets(int? id);
     }
 }
